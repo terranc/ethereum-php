@@ -27,35 +27,20 @@ class Transfer extends AbstractRPCResponseModel
     /** @var string */
     public string $hash;
     /** @var null|string */
-    public ?string $blockHash;
+    public ?string $blockNum;
     /** @var null|string */
-    public ?string $blockNumber;
-    /** @var null|string */
-    public ?string $transactionIndex;
+    public ?string $erc721TokenId = null;
     /** @var string */
     public string $from;
     /** @var string|null */
     public ?string $to;
+    /** @var string|null */
+    public ?string $category;
     /** @var string */
     public string $value;
-    /** @var string */
-    public string $gasPrice;
-    /** @var string */
-    public string $gas;
     /** @var null|string */
-    public ?string $input = null;
+    public ?string $asset;
 
-    /** @var string */
-    private string $r;
-    /** @var string */
-    private string $s;
-    /** @var string */
-    private string $v;
-
-    /** @var WEIValue */
-    private WEIValue $_weiValue;
-    /** @var WEIValue */
-    private WEIValue $_gasPrice;
     /** @var array */
     private array $raw;
 
@@ -79,18 +64,12 @@ class Transfer extends AbstractRPCResponseModel
 
         // Props (prop => (bool)nullable)
         $props = [
-            "blockHash" => true,
-            "blockNumber" => true,
-            "transactionIndex" => true,
+            "blockNum" => true,
+            "erc721TokenId" => true,
+            "category" => true,
             "value" => false,
-            "gasPrice" => false,
-            "gas" => false,
-            "input" => false,
             "from" => false,
             "to" => true,
-            "r" => false,
-            "s" => false,
-            "v" => false,
         ];
 
         foreach ($props as $prop => $nullable) {
@@ -122,6 +101,7 @@ class Transfer extends AbstractRPCResponseModel
 
         // Decimals
         $decProps = [
+            "blockNum",
             "value",
         ];
 
@@ -131,34 +111,7 @@ class Transfer extends AbstractRPCResponseModel
             }
         }
 
-        // Finalise
-        $this->_weiValue = $eth->wei()->fromWei($this->value);
-        $this->_gasPrice = $eth->wei()->fromWei($this->gasPrice);
         $this->raw = $obj;
-    }
-
-    /**
-     * @return int
-     */
-    public function gasLimit(): int
-    {
-        return (int)$this->gas;
-    }
-
-    /**
-     * @return WEIValue
-     */
-    public function valueWEI(): WEIValue
-    {
-        return $this->_weiValue;
-    }
-
-    /**
-     * @return WEIValue
-     */
-    public function gasPriceWEI(): WEIValue
-    {
-        return $this->_gasPrice;
     }
 
     /**
@@ -166,6 +119,6 @@ class Transfer extends AbstractRPCResponseModel
      */
     public function raw(): array
     {
-        return $this->rawContract;
+        return $this->raw;
     }
 }

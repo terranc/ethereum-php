@@ -48,10 +48,10 @@ class AlchemyAPI extends AbstractRPCClient
      */
     protected function getServerURL(): string
     {
-        return sprintf('https://eth-mainnet.alchemyapi.io/v2/', $this->key);
+        return sprintf('https://eth-mainnet.alchemyapi.io/v2/%s', $this->key);
     }
 
-    public function alchemy_getAssetTransfers(array $param)
+    public function alchemy_getAssetTransfers(array $param): ?Transfer
     {
         $transfers = $this->call("alchemy_getAssetTransfers", [$param]);
         if (!is_array($transfers)) {
