@@ -55,7 +55,7 @@ class AlchemyAPI extends AbstractRPCClient
     {
         $transfers = $this->call("alchemy_getAssetTransfers", [$param]);
         if (!is_array($transfers)) {
-            throw RPCInvalidResponseException::InvalidDataType("eth_sendRawTransaction", "Object", gettype($transfers));
+            throw RPCInvalidResponseException::InvalidDataType("alchemy_getAssetTransfers", "Array", gettype($transfers));
         }
 
         return new Transfer($this->eth, $transfers);
