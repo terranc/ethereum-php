@@ -25,7 +25,7 @@ use FurqanSiddiqui\Ethereum\Math\WEIValue;
 class Transfer extends AbstractRPCResponseModel
 {
     /** @var string */
-    public array $transfer;
+    public array $transfers;
 
     /** @var array */
     private array $raw;
@@ -38,7 +38,7 @@ class Transfer extends AbstractRPCResponseModel
     public function __construct(Ethereum $eth, array $obj)
     {
 
-        $this->transfer = $obj['transfer'] ?? [];
+        $this->transfers = $obj['transfers'] ?? [];
 
         $this->raw = $obj;
     }
