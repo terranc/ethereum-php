@@ -40,6 +40,11 @@ class Transfer extends AbstractRPCResponseModel
 
         $this->transfers = $obj['transfers'] ?? [];
 
+        foreach ($this->transfers as $k => $v) {
+            $this->transfers[$k]['blockNum'] = hexdec($v['blockNum']);
+            unset($this->transfers[$k]['asset'], $this->transfers[$k]['erc721TokenId']);
+        }
+
         $this->raw = $obj;
     }
 
